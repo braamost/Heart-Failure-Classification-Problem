@@ -1,3 +1,4 @@
+import os
 import numpy as np
 import argparse
 from data import prepare_data
@@ -14,7 +15,7 @@ def get_available_models():
         'adaboost': AdaBoost(n_estimators=50, max_depth=1)
     }
 
-def run_experiment(selected_models=None):
+def run_experiment(selected_models=None, data_path=None):
     """
     Main experiment runner that:
     1. Loads and prepares data
@@ -25,9 +26,11 @@ def run_experiment(selected_models=None):
     print("Starting Heart Failure Prediction Experiment")
     print("=" * 50)
 
-    # Load and prepare data
-    print("1. Loading and preparing data...")
-    data = prepare_data('dataset/heart.csv')
+    if data_path is None:
+        data_path = os.path.join(os.path.dirname(__file__), 'dataset', 'heart.csv')
+
+    print(f"1. Loading and preparing data from: {data_path}")
+    data = prepare_data(data_path)
     X_train, X_val, X_test = data['X_train'], data['X_val'], data['X_test']
     y_train, y_val, y_test = data['y_train'], data['y_val'], data['y_test']
 
@@ -101,12 +104,14 @@ def run_experiment(selected_models=None):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Heart Failure Prediction Experiment Runner')
     parser.add_argument('--models', nargs='*', choices=['decision_tree', 'bagging', 'adaboost'])
+    parser.add_argument('--data-path', type=str, default=None,
+                        help='Path to the heart.csv dataset file')
 
     args = parser.parse_args()
 
     # Run the main experiment
     selected_models = args.models if args.models else None
-    results = run_experiment(selected_models)
+    results = run_experiment(selected_models, data_path=args.data_path)
 
 
 # Example usage:

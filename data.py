@@ -26,7 +26,7 @@ def _encode_categorical(df):
         pd.DataFrame: Dataframe with categorical features encoded
     """
     categorical_cols = ['Sex', 'ChestPainType', 'RestingECG', 'ExerciseAngina', 'ST_Slope']
-    df_encoded = pd.get_dummies(df, columns=categorical_cols, drop_first=False)
+    df_encoded = pd.get_dummies(df, columns=categorical_cols, drop_first=True)
     return df_encoded
 
 def _split_data(df):

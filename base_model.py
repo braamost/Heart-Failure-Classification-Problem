@@ -18,7 +18,7 @@ class Model(ABC):
             X_val: Optional validation feature matrix for hyperparameter tuning
             y_val: Optional validation target vector for hyperparameter tuning
         """
-        pass
+        raise NotImplementedError("fit() must be implemented by subclasses")
 
     @abstractmethod
     def predict(self, X):
@@ -31,4 +31,4 @@ class Model(ABC):
         Returns:
             Predictions (numpy array)
         """
-        pass
+        raise NotImplementedError("predict() must be implemented by subclasses")
