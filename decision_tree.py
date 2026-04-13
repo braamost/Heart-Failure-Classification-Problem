@@ -10,9 +10,10 @@ class DecisionTree(Model):
     Hyperparameters are tuned automatically via grid search on the validation set.
     """
 
-    def __init__(self, max_depth=None, min_samples_split=2):
+    def __init__(self, max_depth=None, min_samples_split=2, max_features=None):
         self.max_depth = max_depth
         self.min_samples_split = min_samples_split
+        self.max_features = max_features
         self.tree = None
 
     def fit(self, X_train, y_train, X_val=None, y_val=None):
@@ -71,7 +72,16 @@ class DecisionTree(Model):
     def _find_best_split(self, X, y):
         best_ig, best_feature, best_threshold = -1, None, None
 
-        for feature in range(X.shape[1]):
+        # Random Forest: sample a subset of features at each node
+        n_features = X.shape[1]
+        if self.max_features is not None:
+            features = np.random.choice(n_features,
+                                        size=min(self.max_features, n_features),
+                                        replace=False)
+        else:
+            features = range(n_features)
+
+        for feature in features:
             values = X[:, feature]
             unique = np.unique(values)
             if len(unique) < 2:
