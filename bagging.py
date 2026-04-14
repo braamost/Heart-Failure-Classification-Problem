@@ -5,7 +5,7 @@ from decision_tree import DecisionTree
 
 class Bagging(Model):
 
-    def __init__(self, n_estimators=10, max_depth=None, min_samples_split=2):
+    def __init__(self, n_estimators=10, max_depth=None, min_samples_split=None):
         self.n_estimators = n_estimators
         self.max_depth = max_depth
         self.min_samples_split = min_samples_split

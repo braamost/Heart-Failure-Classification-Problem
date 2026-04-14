@@ -10,7 +10,7 @@ from evaluate import evaluate_model, compare_models, find_most_confusing_classes
 def get_available_models():
     """Get dictionary of available models."""
     return {
-        'decision_tree': DecisionTree(max_depth=10, min_samples_split=5),
+        'decision_tree': DecisionTree(),
         'bagging': Bagging(n_estimators=10, max_depth=10, min_samples_split=5),
         'adaboost': AdaBoost(n_estimators=50, max_depth=1),
         'random_forest': RandomForest(n_estimators=20, max_depth=10, min_samples_split=5),

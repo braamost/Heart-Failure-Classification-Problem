@@ -48,12 +48,7 @@ class AdaBoost(Model):
             max_depth=self.max_depth,
             min_samples_split=2,
         )
-        stump.tree = stump._build_tree(
-            X_boot, y_boot,
-            depth=0,
-            max_depth=self.max_depth,
-            min_samples_split=2,
-        )
+        stump.fit(X_boot, y_boot)  # No tuning needed for stumps
         return stump
 
     def fit(self, X_train, y_train, X_val=None, y_val=None):
