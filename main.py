@@ -1,8 +1,8 @@
 import os
-import numpy as np
 import argparse
 from data import prepare_data
 from decision_tree import DecisionTree
+from random_forest import RandomForest
 from bagging import Bagging
 from adaboost import AdaBoost
 from evaluate import evaluate_model, compare_models, find_most_confusing_classes
@@ -12,7 +12,8 @@ def get_available_models():
     return {
         'decision_tree': DecisionTree(max_depth=10, min_samples_split=5),
         'bagging': Bagging(n_estimators=10, max_depth=10, min_samples_split=5),
-        'adaboost': AdaBoost(n_estimators=50, max_depth=1)
+        'adaboost': AdaBoost(n_estimators=50, max_depth=1),
+        'random_forest': RandomForest(n_estimators=20, max_depth=10, min_samples_split=5),
     }
 
 def run_experiment(selected_models=None, data_path=None):
@@ -103,7 +104,8 @@ def run_experiment(selected_models=None, data_path=None):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Heart Failure Prediction Experiment Runner')
-    parser.add_argument('--models', nargs='*', choices=['decision_tree', 'bagging', 'adaboost'])
+    parser.add_argument('--models', nargs='*', choices=['decision_tree', 'bagging',
+                                                        'adaboost', 'random_forest'])
     parser.add_argument('--data-path', type=str, default=None,
                         help='Path to the heart.csv dataset file')
 
